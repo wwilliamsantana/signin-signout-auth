@@ -10,10 +10,20 @@ import {
   Button,
   CreateAccount,
 } from './styles'
+
+import { Eye, EyeSlash } from '@phosphor-icons/react'
+
 import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
+import { useState } from 'react'
 
 export function SingIn() {
+  const [passwordVisible, setPasswordVisible] = useState(false)
+
+  function isTogglePasswordVisible() {
+    setPasswordVisible((state) => !passwordVisible)
+  }
+
   return (
     <Container>
       <Box>
@@ -38,7 +48,15 @@ export function SingIn() {
                 <label htmlFor="email">Senha</label>
                 <a href="/">Esqueceu sua senha?</a>
               </LabelWrapper>
-              <input type="password" placeholder="Digite sua senha" />
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Digite sua senha"
+              />
+              {!passwordVisible ? (
+                <Eye onClick={isTogglePasswordVisible} />
+              ) : (
+                <EyeSlash onClick={isTogglePasswordVisible} />
+              )}
             </InputWrapper>
 
             <Button>Entrar</Button>

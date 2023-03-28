@@ -84,6 +84,7 @@ export const FormContainer = styled.form`
 `
 
 export const InputWrapper = styled.div`
+  position: relative;
   & + & {
     margin-top: 1.6rem;
   }
@@ -104,7 +105,11 @@ export const InputWrapper = styled.div`
     margin-top: 0.8rem;
     font-size: 1.4rem;
     font-weight: 400;
-    color: ${(props) => props.theme['gray-400']};
+    color: ${(props) => props.theme['gray-800']};
+
+    &::placeholder {
+      color: ${(props) => props.theme['gray-400']};
+    }
 
     &:hover,
     &:focus {
@@ -113,6 +118,17 @@ export const InputWrapper = styled.div`
 
     &:disabled {
       opacity: 0.35;
+    }
+  }
+
+  &:has(svg) {
+    svg {
+      width: 2rem;
+      height: 2rem;
+      position: absolute;
+      top: 54%;
+      right: 5%;
+      color: ${(props) => props.theme['gray-400']};
     }
   }
 `
