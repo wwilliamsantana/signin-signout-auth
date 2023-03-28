@@ -7,11 +7,25 @@ export const Container = styled.div`
   & > img:first-of-type {
     width: 50%;
     object-fit: cover;
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
   }
 `
 
 export const Box = styled.main`
   width: 50%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5rem;
+    padding: 10rem;
+  }
 `
 
 export const Header = styled.header`
@@ -20,6 +34,14 @@ export const Header = styled.header`
 
   img {
     width: 16rem;
+
+    @media (max-width: 1024px) {
+      margin-bottom: 5rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin: 0;
   }
 `
 
@@ -29,6 +51,12 @@ export const Content = styled.main`
 
   margin-top: 11.4rem;
   margin-left: 11.2rem;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    margin: 0;
+    max-width: 58rem;
+  }
 `
 
 export const Headline = styled.div`
