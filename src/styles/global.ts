@@ -9,9 +9,18 @@ export const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  button, input, area{
-    all: unset;
+  :root{
+    font-size: 62.5%;
+    font-family: 'Titillium Web', sans-serif;
   }
 
+ body{
+  font-size: 1.6rem;
+ }
+
+ input, textarea, button {
+  all: unset;
+  box-sizing: border-box;
+}
 
 `
