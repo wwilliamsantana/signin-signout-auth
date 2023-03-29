@@ -25,7 +25,11 @@ export function SignIn() {
   }
 
   return (
-    <Container>
+    <Container
+      initial={{ width: 0 }}
+      animate={{ width: '100%' }}
+      exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+    >
       <Box>
         <Header>
           <img src={logo} alt="Logo" />
@@ -64,7 +68,7 @@ export function SignIn() {
 
             <CreateAccount>
               Ainda não tem uma conta?
-              <a href="/"> Inscreva-se</a>
+              <a href="/signup"> Inscreva-se</a>
             </CreateAccount>
           </FormContainer>
         </Content>
