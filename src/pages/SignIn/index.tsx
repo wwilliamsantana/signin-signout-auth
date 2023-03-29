@@ -17,7 +17,7 @@ import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
 import { useState } from 'react'
 
-export function SingIn() {
+export function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   function isTogglePasswordVisible() {
@@ -43,6 +43,7 @@ export function SingIn() {
               <label htmlFor="email">E-mail</label>
               <input type="email" placeholder="Digite seu e-mail" />
             </InputWrapper>
+
             <InputWrapper>
               <LabelWrapper>
                 <label htmlFor="email">Senha</label>
