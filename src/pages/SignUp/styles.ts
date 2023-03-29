@@ -5,9 +5,13 @@ export const Container = styled(motion.div)`
   display: flex;
   height: 100vh;
 
-  & > img {
+  & > img:first-of-type {
     width: 50%;
     object-fit: cover;
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
   }
 `
 export const Box = styled.main`
@@ -15,6 +19,14 @@ export const Box = styled.main`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: -15rem;
+    padding: 10rem;
+  }
 `
 export const Header = styled.header`
   margin-top: 4rem;
@@ -31,6 +43,10 @@ export const Content = styled.div`
 
   margin-right: 12rem;
   margin-top: 11.4rem;
+
+  @media (max-width: 1024px) {
+    margin: 5rem 0 0 0;
+  }
 `
 
 export const Headline = styled.div`
