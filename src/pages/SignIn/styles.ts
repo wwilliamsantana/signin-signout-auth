@@ -132,6 +132,11 @@ export const InputWrapper = styled.div`
       color: ${(props) => props.theme['gray-400']};
     }
   }
+
+  span {
+    color: red;
+    font-size: 1.4rem;
+  }
 `
 
 export const LabelWrapper = styled.div`

@@ -3,6 +3,8 @@ import { useState } from 'react'
 import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
   Box,
@@ -17,15 +19,33 @@ import {
   LabelWrapper,
 } from './styles'
 
+export const SignUpSchema = z.object({
+  name: z.string().min(2, 'Informe seu nome!'),
+  email: z
+    .string()
+    .email('Formato de e-mail inválido')
+    .nonempty('O e-mail é obrigatório!'),
+  password: z.string().min(8, 'A senha precisa de no mínino 8 caracteres'),
+})
+
+type SignUpProps = z.infer<typeof SignUpSchema>
+
 export function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false)
-  const { register, handleSubmit, reset } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SignUpProps>({
+    resolver: zodResolver(SignUpSchema),
+  })
 
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
   }
 
-  function signUpData(data) {
+  function signUpData(data: SignUpProps) {
     console.log(data)
     reset()
   }
@@ -57,6 +77,7 @@ export function SignUp() {
                 placeholder="Digite seu nome"
                 {...register('name')}
               />
+              {errors.name && <span>{errors.name.message}</span>}
             </InputWrapper>
 
             <InputWrapper>
@@ -67,6 +88,7 @@ export function SignUp() {
                 placeholder="Digite seu e-mail"
                 {...register('email')}
               />
+              {errors.email && <span>{errors.email.message}</span>}
             </InputWrapper>
 
             <InputWrapper>
@@ -86,6 +108,7 @@ export function SignUp() {
               ) : (
                 <EyeSlash onClick={isTogglePasswordVisible} />
               )}
+              {errors.password && <span>{errors.password.message}</span>}
             </InputWrapper>
 
             <Button type="submit">Cadastrar</Button>

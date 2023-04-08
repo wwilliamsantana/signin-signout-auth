@@ -3,6 +3,8 @@ import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
 import { Eye, EyeSlash } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Container,
   Box,
@@ -16,15 +18,32 @@ import {
   CreateAccount,
 } from './styles'
 
+export const signInSchema = z.object({
+  email: z
+    .string()
+    .nonempty('O e-mail é obrigatório!')
+    .email('Formato de e-mail inválido'),
+  password: z.string().min(8, 'A senha precisa de no mínino 8 caracteres'),
+})
+
+type SignInProps = z.infer<typeof signInSchema>
+
 export function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false)
-  const { register, handleSubmit, reset } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SignInProps>({
+    resolver: zodResolver(signInSchema),
+  })
 
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
   }
 
-  function signInData(data) {
+  function signInData(data: SignInProps) {
     console.log(data)
     reset()
   }
@@ -56,6 +75,7 @@ export function SignIn() {
                 placeholder="Digite seu e-mail"
                 {...register('email')}
               />
+              {errors.email && <span>{errors.email.message}</span>}
             </InputWrapper>
 
             <InputWrapper>
@@ -74,6 +94,7 @@ export function SignIn() {
               ) : (
                 <EyeSlash onClick={isTogglePasswordVisible} />
               )}
+              {errors.password && <span>{errors.password.message}</span>}
             </InputWrapper>
 
             <Button type="submit">Entrar</Button>

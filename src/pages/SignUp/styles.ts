@@ -104,6 +104,11 @@ export const InputWrapper = styled.div`
       height: 2rem;
     }
   }
+
+  span {
+    color: red;
+    font-size: 14px;
+  }
 `
 
 export const LabelWrapper = styled.div`
