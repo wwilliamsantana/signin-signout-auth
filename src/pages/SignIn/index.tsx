@@ -18,6 +18,7 @@ import {
   CreateAccount,
 } from './styles'
 import { AuthContext } from '../../context/auth'
+import { Navigate } from 'react-router-dom'
 
 export const signInSchema = z.object({
   email: z
@@ -40,77 +41,81 @@ export function SignIn() {
     resolver: zodResolver(signInSchema),
   })
 
-  const { signIn } = useContext(AuthContext)
+  const { signIn, signed } = useContext(AuthContext)
 
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
   }
 
-  function signInData(data: SignInProps) {
-    signIn(data)
+  async function signInData(data: SignInProps) {
+    await signIn(data) // Verify
     reset()
   }
 
-  return (
-    <Container
-      initial={{ width: 0 }}
-      animate={{ width: '100%' }}
-      exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
-    >
-      <Box>
-        <Header>
-          <img src={logo} alt="Logo" />
-        </Header>
-        <Content>
-          <Headline>
-            <h1>Acesse a plataforma.</h1>
-            <p>
-              Faça login ou registre-se para começar a construir seus projetos
-              ainda hoje.
-            </p>
-          </Headline>
-          <FormContainer onSubmit={handleSubmit(signInData)}>
-            <InputWrapper>
-              <label htmlFor="email">E-mail</label>
-              <input
-                autoComplete="off"
-                type="email"
-                placeholder="Digite seu e-mail"
-                {...register('email')}
-              />
-              {errors.email && <span>{errors.email.message}</span>}
-            </InputWrapper>
+  if (signed) {
+    return <Navigate to={'/home'} />
+  } else {
+    return (
+      <Container
+        initial={{ width: 0 }}
+        animate={{ width: '100%' }}
+        exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+      >
+        <Box>
+          <Header>
+            <img src={logo} alt="Logo" />
+          </Header>
+          <Content>
+            <Headline>
+              <h1>Acesse a plataforma.</h1>
+              <p>
+                Faça login ou registre-se para começar a construir seus projetos
+                ainda hoje.
+              </p>
+            </Headline>
+            <FormContainer onSubmit={handleSubmit(signInData)}>
+              <InputWrapper>
+                <label htmlFor="email">E-mail</label>
+                <input
+                  autoComplete="off"
+                  type="email"
+                  placeholder="Digite seu e-mail"
+                  {...register('email')}
+                />
+                {errors.email && <span>{errors.email.message}</span>}
+              </InputWrapper>
 
-            <InputWrapper>
-              <LabelWrapper>
-                <label htmlFor="password">Senha</label>
-                <a href="/">Esqueceu sua senha?</a>
-              </LabelWrapper>
-              <input
-                autoComplete="off"
-                type={passwordVisible ? 'text' : 'password'}
-                placeholder="Digite sua senha"
-                {...register('password')}
-              />
-              {!passwordVisible ? (
-                <Eye onClick={isTogglePasswordVisible} />
-              ) : (
-                <EyeSlash onClick={isTogglePasswordVisible} />
-              )}
-              {errors.password && <span>{errors.password.message}</span>}
-            </InputWrapper>
+              <InputWrapper>
+                <LabelWrapper>
+                  <label htmlFor="password">Senha</label>
+                  <a href="/">Esqueceu sua senha?</a>
+                </LabelWrapper>
+                <input
+                  autoComplete="off"
+                  type={passwordVisible ? 'text' : 'password'}
+                  placeholder="Digite sua senha"
+                  {...register('password')}
+                />
+                {!passwordVisible ? (
+                  <Eye onClick={isTogglePasswordVisible} />
+                ) : (
+                  <EyeSlash onClick={isTogglePasswordVisible} />
+                )}
+                {errors.password && <span>{errors.password.message}</span>}
+              </InputWrapper>
 
-            <Button type="submit">Entrar</Button>
+              <Button type="submit">Entrar</Button>
 
-            <CreateAccount>
-              Ainda não tem uma conta?
-              <a href="/signup"> Inscreva-se</a>
-            </CreateAccount>
-          </FormContainer>
-        </Content>
-      </Box>
+              <CreateAccount>
+                Ainda não tem uma conta?
+                <a href="/signup"> Inscreva-se</a>
+              </CreateAccount>
+            </FormContainer>
+          </Content>
+        </Box>
 
-      <img src={bgImage} alt="" />
-    </Container>
-  )
+        <img src={bgImage} alt="" />
+      </Container>
+    )
+  }
 }

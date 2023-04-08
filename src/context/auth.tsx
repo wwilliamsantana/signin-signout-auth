@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import { api } from '../services/api'
+import { Navigate } from 'react-router-dom'
 
 interface SignInProps {
   email: String
@@ -10,7 +11,7 @@ interface UserProps {
   user: {
     id: number
     email: string
-    password: string
+    name: string
   }
 }
 
@@ -18,6 +19,7 @@ interface AuthContextProps {
   signIn: ({ email, password }: SignInProps) => void
   user: UserProps | null
   signed: boolean
+  signOut: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextProps)
@@ -39,12 +41,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (response.data.error) {
       alert(response.data.error)
     } else {
-      setUser(response.data)
+      setUser(response.data.user)
       const { token, user } = response.data
       api.defaults.headers.common.Authorization = `Bearer ${token}`
       localStorage.setItem('@Auth:token', token)
-      localStorage.setItem('@Auth:user', user)
+      localStorage.setItem('@Auth:user', JSON.stringify(user))
     }
+  }
+
+  function signOut() {
+    localStorage.clear()
+    setUser(null)
+    return <Navigate to={'/'} />
   }
 
   useEffect(() => {
@@ -53,6 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const storageToken = localStorage.getItem('@Auth:token')
 
       if (storageUser && storageToken) {
+        console.log(storageUser)
         setUser(JSON.parse(storageUser))
       }
     }
@@ -64,6 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       value={{
         signIn,
         user,
+        signOut,
         signed: !!user,
       }}
     >
