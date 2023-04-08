@@ -2,6 +2,7 @@ import { Eye, EyeSlash } from '@phosphor-icons/react'
 import { useState } from 'react'
 import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
+import { useForm } from 'react-hook-form'
 
 import {
   Box,
@@ -18,9 +19,15 @@ import {
 
 export function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const { register, handleSubmit, reset } = useForm()
 
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
+  }
+
+  function signUpData(data) {
+    console.log(data)
+    reset()
   }
 
   return (
@@ -41,14 +48,24 @@ export function SignUp() {
               Registre-se para começar a construir seus projetos ainda hoje.
             </p>
           </Headline>
-          <FormContainer>
+          <FormContainer onSubmit={handleSubmit(signUpData)}>
+            <InputWrapper>
+              <label htmlFor="name">Nome</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Digite seu nome"
+                {...register('name')}
+              />
+            </InputWrapper>
+
             <InputWrapper>
               <label htmlFor="email">E-mail</label>
               <input
                 type="email"
                 id="email"
-                name="email"
                 placeholder="Digite seu e-mail"
+                {...register('email')}
               />
             </InputWrapper>
 
@@ -59,9 +76,9 @@ export function SignUp() {
               </LabelWrapper>
               <input
                 type={passwordVisible ? 'text' : 'password'}
-                name="password"
                 id="password"
                 placeholder="Digite sua senha"
+                {...register('password')}
               />
 
               {passwordVisible ? (
@@ -71,7 +88,7 @@ export function SignUp() {
               )}
             </InputWrapper>
 
-            <Button>Cadastrar</Button>
+            <Button type="submit">Cadastrar</Button>
 
             <CreateAccount>
               Já possui uma conta?

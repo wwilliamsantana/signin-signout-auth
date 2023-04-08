@@ -1,3 +1,8 @@
+import { useState } from 'react'
+import bgImage from '../../assets/bg.png'
+import logo from '../../assets/logo.png'
+import { Eye, EyeSlash } from '@phosphor-icons/react'
+import { useForm } from 'react-hook-form'
 import {
   Container,
   Box,
@@ -11,17 +16,17 @@ import {
   CreateAccount,
 } from './styles'
 
-import { Eye, EyeSlash } from '@phosphor-icons/react'
-
-import bgImage from '../../assets/bg.png'
-import logo from '../../assets/logo.png'
-import { useState } from 'react'
-
 export function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const { register, handleSubmit, reset } = useForm()
 
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
+  }
+
+  function signInData(data) {
+    console.log(data)
+    reset()
   }
 
   return (
@@ -42,20 +47,27 @@ export function SignIn() {
               ainda hoje.
             </p>
           </Headline>
-          <FormContainer>
+          <FormContainer onSubmit={handleSubmit(signInData)}>
             <InputWrapper>
               <label htmlFor="email">E-mail</label>
-              <input type="email" placeholder="Digite seu e-mail" />
+              <input
+                autoComplete="off"
+                type="email"
+                placeholder="Digite seu e-mail"
+                {...register('email')}
+              />
             </InputWrapper>
 
             <InputWrapper>
               <LabelWrapper>
-                <label htmlFor="email">Senha</label>
+                <label htmlFor="password">Senha</label>
                 <a href="/">Esqueceu sua senha?</a>
               </LabelWrapper>
               <input
+                autoComplete="off"
                 type={passwordVisible ? 'text' : 'password'}
                 placeholder="Digite sua senha"
+                {...register('password')}
               />
               {!passwordVisible ? (
                 <Eye onClick={isTogglePasswordVisible} />
@@ -64,7 +76,7 @@ export function SignIn() {
               )}
             </InputWrapper>
 
-            <Button>Entrar</Button>
+            <Button type="submit">Entrar</Button>
 
             <CreateAccount>
               Ainda não tem uma conta?
