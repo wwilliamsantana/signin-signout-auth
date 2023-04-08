@@ -5,7 +5,7 @@ import logo from '../../assets/logo.png'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
+import { api } from '../../services/api'
 import {
   Box,
   Button,
@@ -45,8 +45,10 @@ export function SignUp() {
     setPasswordVisible((state) => !passwordVisible)
   }
 
-  function signUpData(data: SignUpProps) {
-    console.log(data)
+  async function signUpData(data: SignUpProps) {
+    const response = await api.post('/create', data)
+    console.log(response.data)
+
     reset()
   }
 
@@ -73,7 +75,7 @@ export function SignUp() {
               <label htmlFor="name">Nome</label>
               <input
                 type="text"
-                id="name"
+                autoComplete="off"
                 placeholder="Digite seu nome"
                 {...register('name')}
               />
@@ -84,7 +86,7 @@ export function SignUp() {
               <label htmlFor="email">E-mail</label>
               <input
                 type="email"
-                id="email"
+                autoComplete="off"
                 placeholder="Digite seu e-mail"
                 {...register('email')}
               />
@@ -98,7 +100,7 @@ export function SignUp() {
               </LabelWrapper>
               <input
                 type={passwordVisible ? 'text' : 'password'}
-                id="password"
+                autoComplete="off"
                 placeholder="Digite sua senha"
                 {...register('password')}
               />

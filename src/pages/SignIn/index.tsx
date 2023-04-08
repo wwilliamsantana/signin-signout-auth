@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import bgImage from '../../assets/bg.png'
 import logo from '../../assets/logo.png'
 import { Eye, EyeSlash } from '@phosphor-icons/react'
@@ -17,6 +17,7 @@ import {
   Button,
   CreateAccount,
 } from './styles'
+import { AuthContext } from '../../context/auth'
 
 export const signInSchema = z.object({
   email: z
@@ -39,12 +40,14 @@ export function SignIn() {
     resolver: zodResolver(signInSchema),
   })
 
+  const { signIn } = useContext(AuthContext)
+
   function isTogglePasswordVisible() {
     setPasswordVisible((state) => !passwordVisible)
   }
 
   function signInData(data: SignInProps) {
-    console.log(data)
+    signIn(data)
     reset()
   }
 
