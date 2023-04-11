@@ -16,7 +16,7 @@ import {
   LabelWrapper,
   Button,
   CreateAccount,
-} from './styles'
+} from './style'
 import { AuthContext } from '../../context/auth'
 import { Navigate } from 'react-router-dom'
 

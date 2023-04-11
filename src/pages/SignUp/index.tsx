@@ -17,7 +17,7 @@ import {
   Headline,
   InputWrapper,
   LabelWrapper,
-} from './styles'
+} from './style'
 
 export const SignUpSchema = z.object({
   name: z.string().min(2, 'Informe seu nome!'),

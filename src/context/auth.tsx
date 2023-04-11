@@ -13,6 +13,7 @@ interface UserProps {
     email: string
     name: string
   }
+  token: string
 }
 
 interface AuthContextProps {
@@ -32,7 +33,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps | null>(null)
 
   async function signIn({ email, password }: SignInProps) {
-    console.log(email, password)
     const response = await api.post('/auth', {
       email,
       password,
@@ -41,12 +41,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (response.data.error) {
       alert(response.data.error)
     } else {
-      setUser(response.data.user)
+      setUser(response.data)
       const { token, user } = response.data
       api.defaults.headers.common.Authorization = `Bearer ${token}`
       localStorage.setItem('@Auth:token', token)
       localStorage.setItem('@Auth:user', JSON.stringify(user))
     }
+    console.log(response.headers.Authorization)
   }
 
   function signOut() {
@@ -61,7 +62,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const storageToken = localStorage.getItem('@Auth:token')
 
       if (storageUser && storageToken) {
-        console.log(storageUser)
         setUser(JSON.parse(storageUser))
       }
     }
