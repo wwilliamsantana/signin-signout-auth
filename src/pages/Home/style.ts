@@ -113,6 +113,17 @@ export const ContentUser = styled.div`
   display: flex;
   align-items: center;
   gap: 4rem;
+
+  & > button {
+    background-color: ${(props) => props.theme['purple-400']};
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    color: ${(props) => props.theme.white};
+
+    &:hover {
+      background-color: ${(props) => props.theme['purple-200']};
+    }
+  }
 `
 
 export const Content = styled.main`

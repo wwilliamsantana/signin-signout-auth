@@ -1,6 +1,5 @@
-// import { useContext, useEffect, useState } from 'react'
-// import { AuthContext } from '../../context/auth'
-// import { api } from '../../services/api'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../context/auth'
 
 import {
   Container,
@@ -14,24 +13,25 @@ import * as Navigation from '@radix-ui/react-navigation-menu'
 import { Link } from 'react-router-dom'
 import { CaretDown } from '@phosphor-icons/react'
 
+interface UserProps {
+  id: string
+  name: string
+  email: string
+}
+
 export function Home() {
-  // const { signOut, user } = useContext(AuthContext)
-  // const [users, setUsers] = useState()
+  const { signOut } = useContext(AuthContext)
+  const [user, setUser] = useState({} as UserProps)
 
-  // async function listUsers() {
-  //   const response = await api.get('/users', {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('@Auth:token')}`,
-  //     },
-  //   })
-  //   const data = response.data
-
-  //   setUsers(data)
-  // }
-
-  // useEffect(() => {
-  //   listUsers()
-  // }, [])
+  useEffect(() => {
+    async function getUserStorage() {
+      const storageUser = localStorage.getItem('@Auth:user')
+      if (storageUser) {
+        setUser(JSON.parse(storageUser))
+      }
+    }
+    getUserStorage()
+  }, [])
 
   return (
     <Container>
@@ -81,11 +81,13 @@ export function Home() {
         </ContentNav>
 
         <ContentUser>
-          <p>Olá user </p>
-          <button>SignOut</button>
+          <p>Olá, {user.name} </p>
+
+          <button onClick={signOut}>Sign Out</button>
         </ContentUser>
       </NavbarContainer>
-      <Content> content</Content>
+
+      <Content> Content</Content>
     </Container>
   )
 }
