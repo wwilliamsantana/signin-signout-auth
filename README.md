@@ -1,12 +1,14 @@
 # Página de Login/Cadastro 
 
 ## :computer: Sobre
-Colocar em prática conceitos de Cadastro/Login utilizando rotas autenticadas.
-* Fiz a utilização de um back-end externo, feito por mim com JWT - [LINK](https://github.com/wwilliamsantana/authorization-jwt).
-* Utilização de localStorage.
-* Utilizei Zod para validação de dados.
-* Utilizei axios para lidar com conexão de API
-* É a implementação de um menu dropdown - Utilizando um componente do Radix UI
+Projeto foi idealizado a partir de um desafio proposto pela #Rocketseat, onde foi disponibilizado o layout pelo [FIGMA](https://www.figma.com/community/file/1217810469465160264)
+### Ideia:
+Criar o layout da pagina de login de acordo ao projeto.
+### Resolução:
+- Além de criar o layout de Login, resolvi levar o projeto um pouco além. Criei um [BACK-END](https://github.com/wwilliamsantana/authorization-jwt). externo para criação de usuário e verificação se o usuário existe (Login), além disso criei uma rota autenticada que retorna todos os usuários se aquele usuário tiver autorizado (Com o token.).  Para armazenar estes dados criei um Banco de dados local utilizando o prisma.
+- Fiz a layout de login/cadastro e um layout interno, caso o usuário tenha acesso, isso tudo utilizando o localStorage e o back-end.
+- Aplicação possui diversas validações tanto no Front-end, quanto no Back-end.
+- Na página de Home, fiz integração com um componente do Radix Ui para fazer o menu dropdown. 
 
 
  ## :rocket: Techs
@@ -16,6 +18,7 @@ Colocar em prática conceitos de Cadastro/Login utilizando rotas autenticadas.
  * React-hook-form
  * Zod
  * Axios
+ * Prisma
  * Framer-motion
  * Styled-components
  * Phosphor icon
