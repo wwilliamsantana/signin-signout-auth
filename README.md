@@ -1,7 +1,7 @@
 # Página de Login/Cadastro 
 
 ## :computer: Sobre
-Projeto foi idealizado a partir de um desafio proposto pela #Rocketseat, onde foi disponibilizado o layout pelo [FIGMA](https://www.figma.com/community/file/1217810469465160264)
+Projeto foi idealizado a partir de um desafio proposto pela #Rocketseat, onde foi disponibilizado **APENAS** o layout pelo [FIGMA](https://www.figma.com/community/file/1217810469465160264)
 ### Ideia:
 Criar o layout da pagina de login de acordo ao projeto.
 ### Resolução:
